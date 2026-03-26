@@ -1,0 +1,229 @@
+:root {
+  --ani-bg: #020617;
+  --ani-text: #f8fafc;
+  --ani-slate: #94a3b8;
+  --ani-neon: #00f3ff;
+  --ani-glass: rgba(15, 23, 42, 0.6);
+  --ani-glass-border: rgba(148, 163, 184, 0.25);
+  --ani-radius-card: 16px;
+  --ani-radius-btn: 12px;
+  --ani-space-1: 8px;
+  --ani-space-2: 12px;
+  --ani-space-3: 16px;
+  --ani-space-4: 20px;
+  --ani-space-5: 28px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  background: var(--ani-bg);
+  color: var(--ani-text);
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  line-height: 1.5;
+}
+
+.core-app {
+  min-height: 100vh;
+  background: radial-gradient(circle at 15% 12%, rgba(0, 243, 255, 0.1), transparent 30%),
+    radial-gradient(circle at 84% 80%, rgba(56, 189, 248, 0.08), transparent 32%),
+    var(--ani-bg);
+}
+
+.core-page {
+  min-height: 100vh;
+  padding: 100px var(--ani-space-3) 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.core-panel {
+  width: 100%;
+  background: var(--ani-glass);
+  backdrop-filter: blur(18px);
+  border: 1px solid var(--ani-glass-border);
+  border-radius: var(--ani-radius-card);
+  padding: var(--ani-space-5);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+}
+
+.core-panel-medium {
+  max-width: 680px;
+}
+
+.core-panel-wide {
+  max-width: 980px;
+}
+
+.core-center {
+  text-align: center;
+}
+
+.core-copy {
+  color: var(--ani-slate);
+}
+
+.core-label {
+  display: grid;
+  gap: 6px;
+  color: var(--ani-slate);
+  margin: 14px 0;
+}
+
+.core-input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: var(--ani-radius-btn);
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(2, 6, 23, 0.5);
+  color: var(--ani-text);
+  outline: none;
+}
+
+.core-input:focus {
+  border-color: var(--ani-neon);
+  box-shadow: 0 0 0 3px rgba(0, 243, 255, 0.14);
+}
+
+.core-btn {
+  border: 1px solid transparent;
+  border-radius: var(--ani-radius-btn);
+  cursor: pointer;
+  font-weight: 600;
+  padding: 11px 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.core-btn:hover {
+  transform: translateY(-1px);
+}
+
+.core-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.core-btn-primary {
+  color: #04242b;
+  background: linear-gradient(120deg, var(--ani-neon), #67e8f9);
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+}
+
+.core-btn-secondary {
+  color: var(--ani-slate);
+  background: rgba(15, 23, 42, 0.35);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.core-btn-secondary:hover {
+  border-color: rgba(0, 243, 255, 0.5);
+  color: var(--ani-text);
+}
+
+.core-empty {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+}
+
+.core-list {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0;
+}
+
+.core-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(2, 6, 23, 0.35);
+}
+
+.core-total-row,
+.core-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.core-total-row {
+  margin: 16px 0;
+  color: var(--ani-neon);
+}
+
+.core-actions-row {
+  display: flex;
+  gap: 10px;
+}
+
+.core-toast-stack {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 9999;
+  display: grid;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.core-toast {
+  min-width: 220px;
+  max-width: 360px;
+  border-radius: 12px;
+  border: 1px solid var(--ani-glass-border);
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--ani-text);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  padding: 10px 12px;
+}
+
+.core-toast-title {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--ani-neon);
+  margin-bottom: 4px;
+}
+
+.core-toast-success {
+  border-color: rgba(16, 185, 129, 0.45);
+}
+
+.core-toast-error {
+  border-color: rgba(244, 63, 94, 0.45);
+}
+
+@media (max-width: 768px) {
+  .core-page {
+    padding-top: 86px;
+  }
+
+  .core-panel {
+    padding: 20px;
+  }
+
+  .core-toast-stack {
+    left: 10px;
+    right: 10px;
+    top: 10px;
+  }
+
+  .core-toast {
+    max-width: 100%;
+  }
+}
