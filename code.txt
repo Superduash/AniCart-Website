@@ -1,6 +1,6 @@
 # IMPORTANT CODE EXPORT
 
-Total files: 10
+Total files: 9
 
 ================================================================================
 FILE: client/package.json
@@ -11,18 +11,18 @@ FILE: client/package.json
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.2",
-    "@testing-library/user-event": "^13.5.0",
-    "framer-motion": "^12.38.0",
-    "lucide-react": "^1.6.0",
+    "bcryptjs": "^3.0.3",
+    "cloudinary": "^2.9.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.3",
+    "morgan": "^1.10.1",
+    "multer": "^2.1.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-icons": "^5.6.0",
-    "react-router-dom": "^7.13.2",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "react-scripts": "5.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -47,6 +47,9 @@ FILE: client/package.json
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
   }
 }
 
@@ -340,105 +343,6 @@ export const useNavigation = () => useContext(NavigationContext);
 
 
 ================================================================================
-FILE: client/src/components/SciFiShell.jsx
-================================================================================
-
-import React from "react";
-import { motion } from "framer-motion";
-import "../pages/SciFiDesign.css";
-
-export const pageTransition = {
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.45, ease: "easeOut" } },
-};
-
-export const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.4, delay, ease: "easeOut" },
-  }),
-};
-
-export const stagger = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.08 },
-  },
-};
-
-export const SpaceBackdrop = () => (
-  <div className="sf-backdrop" aria-hidden="true">
-    <div className="sf-orb sf-orb-cyan" />
-    <div className="sf-orb sf-orb-blue" />
-    <div className="sf-grid" />
-  </div>
-);
-
-export const UnifiedNavbar = ({ user, navigate, onLogout }) => (
-  <header className="sf-nav-wrap">
-    <nav className="sf-nav sf-glass-panel">
-      <button className="sf-brand" onClick={() => navigate("/shop")}>
-        <span className="sf-brand-mark">DB</span>
-        <span>Databank</span>
-      </button>
-      <div className="sf-nav-actions">
-        {user ? (
-          <>
-            <span className="sf-nav-user">Agent: {user.username}</span>
-            <button className="sf-btn sf-btn-ghost" onClick={onLogout}>
-              Terminate Link
-            </button>
-          </>
-        ) : (
-          <>
-            <button className="sf-btn sf-btn-ghost" onClick={() => navigate("/login")}>
-              Login
-            </button>
-            <button className="sf-btn sf-btn-primary" onClick={() => navigate("/signup")}>
-              Initiate Link
-            </button>
-          </>
-        )}
-      </div>
-    </nav>
-  </header>
-);
-
-export const UnifiedFooter = () => (
-  <footer className="sf-footer">
-    <div className="sf-footer-inner sf-glass-panel">
-      <p>Databank Commerce Grid - Sector Prime</p>
-      <p>Neon-secured transactions and orbital-grade delivery logistics.</p>
-    </div>
-  </footer>
-);
-
-export const GlassPanel = ({ className = "", children, ...props }) => (
-  <div className={`sf-glass-panel ${className}`.trim()} {...props}>
-    {children}
-  </div>
-);
-
-export const AuthInput = ({ label, error, ...props }) => (
-  <label className="sf-field">
-    <span>{label}</span>
-    <input className={`sf-input ${error ? "sf-input-error" : ""}`} {...props} />
-    {error && <small className="sf-error">{error}</small>}
-  </label>
-);
-
-export const PageShell = ({ children }) => (
-  <motion.div {...pageTransition} className="sf-page">
-    <SpaceBackdrop />
-    {children}
-  </motion.div>
-);
-
-
-================================================================================
 FILE: client/src/index.js
 ================================================================================
 
@@ -446,7 +350,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -454,11 +357,6 @@ root.render(
     <App />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
 
 
 ================================================================================
