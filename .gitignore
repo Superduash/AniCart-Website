@@ -1,9 +1,69 @@
+# Dependencies
 node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
 .env
-build/
-dist/
-.cache/
+.env.local
+.env.*.local
+.env.production.local
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Logs
+logs/
 *.log
-client/node_modules/
-server/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Build/dist directories
+dist/
+build/
+out/
+/client/build/
+/client/dist/
+
+# React specific
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage
+coverage/
+.nyc_output/
+/client/coverage/
+
+# Misc
+.cache/
+tmp/
+temp/
+
+# OS generated files
+Thumbs.db
+
+# Testing
+.mocha
+test/coverage
