@@ -94,7 +94,6 @@ const productSchema = new mongoose.Schema(
 );
 
 // Index frequently queried fields
-productSchema.index({ series: 1 });
 productSchema.index({ isActive: 1 });
 productSchema.index({ tags: 1 });
 

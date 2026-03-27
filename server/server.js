@@ -5,6 +5,23 @@
  * Configures middleware, routes, database connection, and starts the server.
  */
 
+const originalEmitWarning = process.emitWarning;
+process.emitWarning = (warning, ...args) => {
+  const warningMessage = typeof warning === 'string' ? warning : warning?.message || '';
+  const warningType = typeof warning === 'object' ? warning?.name : args[0];
+  const warningCode = typeof warning === 'object' ? warning?.code : args[1];
+
+  const isUrlParseDeprecation =
+    warningCode === 'DEP0169' ||
+    (warningType === 'DeprecationWarning' && warningMessage.includes('url.parse()'));
+
+  if (isUrlParseDeprecation) {
+    return;
+  }
+
+  return originalEmitWarning.call(process, warning, ...args);
+};
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
@@ -17,8 +34,8 @@ require('dotenv').config();
 // Import configuration
 const config = require('./config');
 
-// Import database connection
-const { connectDB } = require('./db/connect');
+const connectDB = require("./db/connect");
+connectDB();
 
 // Import middleware
 const { errorHandler, notFound } = require('./middleware/errorHandler');
@@ -104,24 +121,42 @@ app.use(errorHandler);
 // ============================================
 
 /**
- * Start the server after database connection
+ * Start the server
  */
-const startServer = async () => {
+const startServer = () => {
   try {
-    // Connect to MongoDB
-    await connectDB();
+    const initialPort = Number(config.PORT) || 5000;
 
-    // Start listening for requests
-    app.listen(config.PORT, () => {
-      console.log('\n=================================');
-      console.log('  AniCartAi Server');
-      console.log('=================================');
-      console.log(`  Environment: ${config.NODE_ENV}`);
-      console.log(`  Port: ${config.PORT}`);
-      console.log(`  API URL: http://localhost:${config.PORT}/api`);
-      console.log(`  Client URL: ${config.CLIENT_URL}`);
-      console.log('=================================\n');
-    });
+    const listenWithFallback = (port) => {
+      const server = app
+        .listen(port, () => {
+      console.log(`
+=================================
+🚀 AniCartAi Server Started
+=================================
+🌍 Environment : ${process.env.NODE_ENV || 'development'}
+🖥️  Port        : ${port}
+🔗 API URL     : http://localhost:${port}/api
+💻 Client URL  : http://localhost:3000
+=================================
+`);
+        })
+        .on('error', (error) => {
+          if (error.code === 'EADDRINUSE') {
+            const nextPort = port + 1;
+            console.warn(`Port ${port} is busy. Retrying on ${nextPort}...`);
+            listenWithFallback(nextPort);
+            return;
+          }
+
+          console.error('Failed to start server:', error.message);
+          process.exit(1);
+        });
+
+      return server;
+    };
+
+    listenWithFallback(initialPort);
   } catch (error) {
     console.error('Failed to start server:', error.message);
     process.exit(1);

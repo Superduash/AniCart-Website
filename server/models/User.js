@@ -28,7 +28,6 @@ const userSchema = new mongoose.Schema(
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
         'Please enter a valid email address',
       ],
-      index: true,
     },
     password: {
       type: String,
@@ -95,9 +94,6 @@ const userSchema = new mongoose.Schema(
     },
   }
 );
-
-// Index frequently queried fields
-userSchema.index({ email: 1 });
 
 /**
  * Pre-save middleware to hash password before saving
